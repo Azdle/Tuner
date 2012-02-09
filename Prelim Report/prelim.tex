@@ -125,15 +125,15 @@ register to cut down on the number of pins required).
 \section{Microcontroller Timing}
 Cent calculations for 220hz-440hz:
 \begin{equation}
-{{440 - 220} \over 1200} = .1833 {Hz \over cent}
+{{440 - 220} \over 1200} = .1833 ~{Hz \over cent}
 \end{equation}
 Time difference between cents:
 \begin{equation}
-{1 \over 440 Hz} - {1 \over 439.817 Hz} = 1\mu S
+{1 \over 439.817 Hz} - {1 \over 440 Hz} = 950~nS
 \end{equation}
 Microcontroller time per clock cycle:
 \begin{equation}
-{1 \over 16 MHz} = 62.5nS
+{1 \over 16 MHz} = 62.5~nS
 \end{equation}
 Clock cycles per cent:
 \begin{equation}
@@ -141,7 +141,7 @@ Clock cycles per cent:
 \end{equation}
 Time of one cycle of input signal:
 \begin{equation}
-{1 \over 440 Hz} = 2.27 mS
+{1 \over 440 Hz} = 2.27~mS
 \end{equation}
 Clock Cycles per Signal Cycle:
 \begin{equation}
