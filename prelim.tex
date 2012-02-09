@@ -37,7 +37,7 @@
  
 %\textsc{\Large Stuff}\\[0.5cm]
 
-\textsc{\Large 9 Febuary 2012}\\[0.5cm]
+\textsc{\Large 9 February 2012}\\[0.5cm]
 
 \textsc{\Large University of Minnesota}\\[0.5cm]
  
@@ -66,6 +66,7 @@ Professor \textsc{Higman}\\
 \end{minipage}
 \end{center}
 
+\vfill
 
 \section*{Abstract}
 The general purpose of this project is the design and construction of a music tuner. Specifically, this
@@ -76,6 +77,8 @@ pitch is above or below the given pitch). Our tuner will indicate this informati
 LEDs. We plan to use a microcontroller to analyze the input and control the output LEDs.
 \end{singlespace}
 
+
+\newpage
 \section{Introduction}
 
 (Explanation of how cents and such work, pitches etc... More to come on this later)
@@ -99,7 +102,7 @@ The basic flow of the signal is shown in Figure \ref{block}. After the input is 
 remove any noise from the signal. After being filtered, the signal will pass through a preamp, to boost
 the signal so that it can be further processed by the later stages. The signal is then sent to a square
 wave converter, which will take the analog signal and convert it into a series of square pulses to be
-handled by the microcontroller. If nessary there may also be an output beffer stage. The microcontroller
+handled by the microcontroller. If necessary there may also be an output buffer stage. The microcontroller
 will take the signal generated from this stage and
 measure the frequency of the square pulses over a certain period of time. Using this information, the
 microcontroller will choose light up an LED to display how close the signal is to the desired pitch.
@@ -128,7 +131,7 @@ Time difference between cents:
 \begin{equation}
 {1 \over 440 Hz} - {1 \over 439.817 Hz} = 1\mu S
 \end{equation}
-Microcontroller time per colck cycle:
+Microcontroller time per clock cycle:
 \begin{equation}
 {1 \over 16 MHz} = 62.5nS
 \end{equation}
