@@ -1,0 +1,157 @@
+\documentclass[12pt]{article}
+%\linespread{1.6}
+\usepackage{setspace}
+\doublespacing
+\usepackage[hmargin=1in,vmargin=1in]{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{epstopdf}
+\usepackage{tikz-timing}
+\usepackage{multirow}
+\usepackage{here}
+\usepackage{flafter}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
+\newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
+
+
+\title{Lab 8:\\RC Step Response} %Metadata
+\author{Patrick Barrett}
+\date{}                                           % Activate to display a given date or no date
+
+\begin{document}
+
+\begin{singlespace}
+
+\begin{center}
+ 
+ 
+
+ 
+\textsc{\LARGE EE3102}\\[0.5cm]
+ 
+%\textsc{\Large Stuff}\\[0.5cm]
+
+\textsc{\Large 8 Febuary 2012}\\[0.5cm]
+
+\textsc{\Large University of Minnesota}\\[0.5cm]
+ 
+ 
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Step Response of an RC Circuit}\\[0.4cm]
+ 
+\HRule \\[1cm]
+ 
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Project Members:}\\
+Patrick \textsc{Barrett} \\
+Mark \textsc{Pennebecker} \\
+Kayiita  \textsc{Johnson} \\
+Prashant \textsc{Dhakal} \\
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{Submitted to:} \\
+Professor \textsc{Higman}\\
+\end{flushright}
+\end{minipage}
+\end{center}
+
+
+\section*{Abstract}
+The general purpose of this project is the design and construction of a music tuner. Specifically, this
+tuner will be checking whether or not an input pitch matches 440Hz (A). The input will be read from
+either a microphone or a coax cable fed from an oscilloscope. The purpose of a tuner is not only to test
+on whether or not a pitch matches a note, but also to see if the input pitch is sharp or flat (whether the
+pitch is above or below the given pitch). Our tuner will indicate this information through a series of
+LEDs. We plan to use a microcontroller to analyze the input and control the output LEDs.
+\end{singlespace}
+
+\section{Introduction}
+
+Explanation of how cents and such work, pitches etc... (More to come on this later)
+
+Our tuner will be accurate to ±5 cents for A-440Hz. When the input pitch matches this frequency, the
+center LED will light up. As the pitch moves out of tune, other LEDs will light up to signify how sharp or
+flat the pitch is compared to A. These LED's will be set to 5 cent intervals ranging from -30 to 30 cents
+around A. Anything above or below these ranges will simply light up the leftmost or rightmost LED
+depending on whether they are above or below the required pitch. The decision of which LED to light up
+will be handled by a microcontroller.
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=6in]{"Block Overview"}
+	\caption{Block Overview}
+	\label{1A} 
+\end{figure}
+
+The basic flow of the data will be as follows. After the input is received from the oscilloscope
+(microphone input will need a few more steps), the signal will pass through a bandpass filter to help
+remove any noise from the signal. After being filtered, the signal will pass through a preamp, to boost
+the signal so that it can be further processed by the later stages. The signal is then sent to a square
+wave converter, which will take the analog signal and convert it into a series of square pulses to be
+handled by the microcontroller. The microcontroller will take the signal generated from this stage and
+measure the frequency of the square pulses over a certain period of time. Using this information, the
+microcontroller will choose light up an LED to display how close the signal is to the desired pitch.
+
+\section{Body}
+
+For the microcontroller aspect of the datapath, we decided to use a PIC18 device. Given the relative
+simplicity of the work required by the microcontroller, we chose this device do to our familiarity with
+the inner workings of the microcontroller rather than any special functionalities of the PIC18.
+
+The CCP module of the PIC18 can be used to measure the time in clock cycles between events. In this
+
+application we'll define an event as the falling edge of the square wave generated from the previous
+stage. Using one of the internal timers of the PIC18 we'll be able to measure the time between events
+and we can calculate the frequency from that time measurement. Since it is possible for the frequency
+to fluctuate we will take an average over a (relatively) number of samples. Based upon the frequency
+calculated, the microcontroller will turn on an LED corresponding with the calculated frequency. To
+accomplish this, we plan on using a single pin per 5 cent range. (Note that we may end up using a shift
+register to cut down on the number of pins required).
+
+\section{Formatting Examples}
+
+\begin{table}[H]
+\centering
+\caption{\label{measured_tau}Measured Values of $\tau$}
+\begin{tabular}{|r|c|c|}
+\hline
+ 			&9.879 K$\Omega$ (1)	&98.81 K$\Omega$ (2)	\\	\hline	
+9.94 nF (A)		&1.460 mS	&2.596 mS	\\  \hline
+103.5 nF (B)		&2.530 mS	&11.44 mS	\\  \hline
+106.79 nF (Series)	&N/A		&1.750 mS	\\  \hline
+8.64 nF (Parallel)	&N/A		&12.44 mS	\\  \hline
+\end{tabular}
+\end{table}
+ Table \ref{measured_tau} is shown above.
+
+%\newpage
+\subsection{Appendix}
+\subsubsection{Sample Calculations}
+\begin{equation}
+	v(t) = 6.080 + ( 0 - 6.080)e^{-t/98.20E-6}
+\end{equation}
+\begin{equation}
+	v(t) = 6.080(1 - e^{-t/98.20E-6})
+\end{equation}
+
+%\subsection{Data}
+%\begin{figure}[H]
+%\centering
+%	\input{fig1}
+%	\caption{Voltage Across a Capacitor and Resistor in Parallel For 10K$\Omega$ and 0.01$\mu$F}
+%	\label{1A} 
+%\end{figure}
+
+
+\end{document}  
