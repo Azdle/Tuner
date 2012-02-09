@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<title>theUnlink</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="/resources/css/screen.css" media="screen" />
+	</head>
+	<body>
+		<header>
+			<img id="header_img" src="/resources/img/logo.png"  alt="theUnlink" />
+			<nav>						<!-- Nav Section Start -->
+				<ul>
+					<li><a href="/about/">About</a></li>
+					<li><a href="/projects/">Projects</a></li>
+					<li><a href="/blog/">Blog</a></li>
+				</ul>
+
+			</nav>						<!-- Nav Section End -->
+		</header>
+		<div id="main_area">
+			<article>
+				<section id="main_section">		<!-- Main Section Start -->
+					<div class="post"><a href="/blog/post/63/" class="title"><h2>A Quick "I'm Not Dead" Update</h2></a>
+					<div class="postinfo">By Pat on Apr 21st 2010</div>
+					<div class="itemcontent">
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					</div>
+					<div class="postinfo">Tags: <a href='/blog/tags/mendel'>mendel</a> <a href='/blog/tags/project:reprap'>project:reprap</a> </div></div>
+				</section>						<!-- Main Section End -->
+				<aside id="info_section">		<!-- Info Section Start -->
+
+					<a href="/login/">Login</a>
+				</aside>						<!-- Info Section End -->
+			</article>
+		</div>
+		<footer>
+			<p>&copy;2011 Patrick Barrett</p>
+		</footer>
+
+	</body>
+</html>
