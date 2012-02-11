@@ -1,0 +1,19 @@
+** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+
+** Creating circuit file "filter take 2-SCHEMATIC1-AC.sim.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Local Libraries :
+* From [PSPICE NETLIST] section of pspiceev.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.TRAN  0 1s 0 
+.PROBE 
+.INC "filter take 2-SCHEMATIC1.net" 
+
+.INC "filter take 2-SCHEMATIC1.als"
+
+
+.END

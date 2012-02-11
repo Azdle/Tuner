@@ -1,0 +1,211 @@
+
+**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "filter take 2-SCHEMATIC1-AC.sim.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Local Libraries :
+* From [PSPICE NETLIST] section of pspiceev.ini file:
+.lib "nom.lib" 
+
+*Analysis directives: 
+.TRAN  0 1s 0 
+.PROBE 
+.INC "filter take 2-SCHEMATIC1.net" 
+
+
+**** INCLUDING "filter take 2-SCHEMATIC1.net" ****
+* source FILTER TAKE 2
+X_U1         N05300 N00200 VCC 0 N00200 uA741
+X_U2         1/2VCC N05468 VCC 0 N05487 uA741
+R_R4         N00200 N05465  1k  
+R_R5         N05487 N05468  200k  
+C_C1         N05487 N05468  900pf  
+C_C2         N05468 N05465  723nf  
+V_V2         N05300 N05978 DC 0Vdc AC 0Vac 60Hz
+R_R6         1/2VCC VCC  100k  
+R_R7         0 1/2VCC  100k  
+V_V1         N05978 0 DC 0Vdc AC 10mVac 440Hz
+V_3_3_3V         VCC 0 3.3Vdc
+X_U3         1/2VCC N05487 VCC 0 N05811 uA741
+C_C6         0 1/2VCC  1n  
+R_R8         0 N05811  100k  
+
+**** RESUMING "filter take 2-SCHEMATIC1-AC.sim.cir" ****
+.INC "filter take 2-SCHEMATIC1.als"
+
+
+
+**** INCLUDING "filter take 2-SCHEMATIC1.als" ****
+.ALIASES
+X_U1            U1(+=N05300 -=N00200 V+=VCC V-=0 OUT=N00200 )
+X_U2            U2(+=1/2VCC -=N05468 V+=VCC V-=0 OUT=N05487 )
+R_R4            R4(1=N00200 2=N05465 )
+R_R5            R5(1=N05487 2=N05468 )
+C_C1            C1(1=N05487 2=N05468 )
+C_C2            C2(1=N05468 2=N05465 )
+V_V2            V2(+=N05300 -=N05978 )
+R_R6            R6(1=1/2VCC 2=VCC )
+R_R7            R7(1=0 2=1/2VCC )
+V_V1            V1(+=N05978 -=0 )
+V_3_3_3V          3.3.3V(+=VCC -=0 )
+X_U3            U3(+=1/2VCC -=N05487 V+=VCC V-=0 OUT=N05811 )
+C_C6            C6(1=0 2=1/2VCC )
+R_R8            R8(1=0 2=N05811 )
+_    _(1/2VCC=1/2VCC)
+_    _(VCC=VCC)
+_    _(VCC=VCC)
+.ENDALIASES
+
+**** RESUMING "filter take 2-SCHEMATIC1-AC.sim.cir" ****
+.END
+
+**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+
+
+ ****     Diode MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U1.dx         X_U2.dx         X_U3.dx         
+          IS  800.000000E-18  800.000000E-18  800.000000E-18 
+          RS    1               1               1            
+
+
+**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               X_U1.qx         X_U2.qx         X_U3.qx         
+               NPN             NPN             NPN             
+          IS  800.000000E-18  800.000000E-18  800.000000E-18 
+          BF   93.75           93.75           93.75         
+          NF    1               1               1            
+          BR    1               1               1            
+          NR    1               1               1            
+          CN    2.42            2.42            2.42         
+           D     .87             .87             .87         
+
+
+**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(  VCC)    3.3000  (1/2VCC)    1.6428 (N00200)     .3869 (N05300)    0.0000     
+
+(N05465)     .3869 (N05468)    1.6428 (N05487)    1.6588 (N05811)     .4285     
+
+(N05978)    0.0000 (X_U1.6)    1.4846 (X_U1.7)     .3861 (X_U1.8)     .3861     
+
+(X_U1.9)    0.0000 (X_U2.6)-833.3E-09 (X_U2.7)    1.6588 (X_U2.8)    1.6588     
+
+(X_U2.9)    0.0000 (X_U3.6)     .2976 (X_U3.7)     .4286 (X_U3.8)     .4286     
+
+(X_U3.9)    0.0000 (X_U1.10)    -.2522                   (X_U1.11)    3.2212    
+
+(X_U1.12)    3.3000                   (X_U1.13)    -.2246                       
+
+(X_U1.14)    -.2522                   (X_U1.53)    2.3000                       
+
+(X_U1.54)    1.0000                   (X_U1.90)    -.0155                       
+
+(X_U1.91)   40.0000                   (X_U1.92)  -40.0000                       
+
+(X_U1.99)    1.6500                   (X_U2.10)    1.0352                       
+
+(X_U2.11)    3.2603                   (X_U2.12)    3.2603                       
+
+(X_U2.13)    1.0490                   (X_U2.14)    1.0490                       
+
+(X_U2.53)    2.3000                   (X_U2.54)    1.0000                       
+
+(X_U2.90) 175.4E-06                   (X_U2.91)   40.0000                       
+
+(X_U2.92)  -40.0000                   (X_U2.99)    1.6500                       
+
+(X_U3.10)    1.0437                   (X_U3.11)    3.2524                       
+
+(X_U3.12)    3.2682                   (X_U3.13)    1.0603                       
+
+(X_U3.14)    1.0548                   (X_U3.53)    2.3000                       
+
+(X_U3.54)    1.0000                   (X_U3.90)     .0011                       
+
+(X_U3.91)   40.0000                   (X_U3.92)  -40.0000                       
+
+(X_U3.99)    1.6500                   
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    V_V2         3.152E-12
+    V_V1         3.152E-12
+    V_3_3_3V    -6.065E-04
+    X_U1.vb      1.485E-05
+    X_U1.vc      1.914E-12
+    X_U1.ve     -1.575E-05
+    X_U1.vlim   -1.559E-05
+    X_U1.vlp    -4.002E-11
+    X_U1.vln    -3.999E-11
+    X_U2.vb     -8.333E-12
+    X_U2.vc      6.420E-13
+    X_U2.ve      6.597E-13
+    X_U2.vlim    1.754E-07
+    X_U2.vlp    -4.000E-11
+    X_U2.vln    -4.000E-11
+    X_U3.vb      2.976E-06
+    X_U3.vc      1.872E-12
+    X_U3.ve     -3.156E-06
+    X_U3.vlim    1.129E-06
+    X_U3.vlp    -4.000E-11
+    X_U3.vln    -4.000E-11
+
+    TOTAL POWER DISSIPATION   2.02E-03  WATTS
+
+
+
+          JOB CONCLUDED
+
+          TOTAL JOB TIME            1.11
+

@@ -1,0 +1,15 @@
+* source FILTER TAKE 2
+X_U1         N05300 N00200 VCC 0 N00200 uA741
+X_U2         1/2VCC N05468 VCC 0 N05487 uA741
+R_R4         N00200 N05465  1k  
+R_R5         N05487 N05468  200k  
+C_C1         N05487 N05468  900pf  
+C_C2         N05468 N05465  723nf  
+V_V2         N05300 N05978 DC 0Vdc AC 0Vac 60Hz
+R_R6         1/2VCC VCC  100k  
+R_R7         0 1/2VCC  100k  
+V_V1         N05978 0 DC 0Vdc AC 10mVac 440Hz
+V_3_3_3V         VCC 0 3.3Vdc
+X_U3         1/2VCC N05487 VCC 0 N05811 uA741
+C_C6         0 1/2VCC  1n  
+R_R8         0 N05811  100k  
