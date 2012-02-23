@@ -1,9 +1,12 @@
 #include <p18f4550.h> 
 
 
-//copy pasta from 2361 (runs at 8 MHz)
-#pragma config FOSC=HSPLL_HS, PLLDIV=2, CPUDIV=OSC1_PLL2, USBDIV=2, IESO=ON
-#pragma config WDT=OFF, PWRT=ON, BOR=OFF
+#pragma config FOSC=HSPLL_HS //Using XMHz crystal(above 4 MHz, assuming 8 MHz)
+#pragma config PLLDIV=2 //Divide 8 by 2 provide 4 MHz to the 96 MHz PLL
+#pragma config CPUDIV=OSC1_PLL2 //Divide 96 MHz by 2 to get 48 MHz for system clock
+#pragma config USBDIV=2 //USB clock comes from 96MHz PLL/2
+#pragma config IESO=ON
+#pragma config WDT=OFF, PWRT=ON, BOR=OFF//Disable Watchdog timer and Brown Out Rest, Enable Power up timer
 #pragma config LVP=OFF, MCLRE=ON, PBADEN=OFF, STVREN=ON
 #pragma config FCMEN = ON
 
@@ -11,7 +14,7 @@ void hi_isr(void);
 void lo_isr(void);
 
 #define CCP1IF PIR1bits.CCP1IF 
-//using 16 MHz clock
+//using 16 MHz Fosc (48 MHz Clock)
 #define COUNT_1 35790	//lowest cycle count (highest frequency)
 #define COUNT_2 35893
 #define COUNT_3 35996
@@ -27,11 +30,12 @@ void lo_isr(void);
 
 #define size 5 //size of the array being used.
 int tmr_overflow;//used for tmr overflow counts
-unsigned long int values[size];
+unsigned long int values[size];//May not need to have the items be this large
 unsigned char count = 0; //used for keeping track of place in array
 unsigned long int sum;
 unsigned long int avg;// could not define this in the isr?
-int ledAverageChoice(unsigned long int avg);
+unsigned char init_counter = 0;
+unsigned int ledAverageChoice(unsigned long int avg);
 
 
 #pragma code high_vector = 0x08
@@ -45,8 +49,17 @@ void hi_isr_entry(void)
 void hi_isr(void)
 { 
 	if(CCP1IF)
+		if(init_counter < size)//first size iterations will not yield an output
+		{
+				int spot = count++;
+				CCPIF = 0;
+				count = count % size;
+				values[spot] = CCPR1
+				sum = sum + CCPR1;
+		
+		}
 		//This will ensure that only 1 time in every 5 will output, not necessarily bad, but is it what we want?
-		/*if(count < 5)//ensure that 5 values are stored before avg is calculated
+		/*if(count < 5)//on the occurance of size iterations 
 		{
 			CCP1IF = 0;
 			count++;
@@ -104,11 +117,9 @@ void hi_isr(void)
 			case 12:
 				//set appropriate LED's
 				return;
-			case 13:
-				//set appropriate LED's
-				return;
+
 			default:
-				PORTD = 0xFF;
+				PORTD = 0xFF;//set all LED's to indicate an error
 				PORTA = 0xFF;
 				return;
 			}											
@@ -134,14 +145,17 @@ void lo_isr_entry(void)
 #pragma interruptlow lo_isr
 void lo_isr(void){
 	//This section of code handles when TMR0 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
+	int i;
+	INTCONbits.GIEH = 0;
 	count = 0;
 	PORTA = 0x00;
 	PORTD = 0x00;
-	int i;
+	
 	for(i = 0; i <(size -1); i++)
 	{
 		values[i] = 0;
 	}
+	INTCONbits.GIEH = 0;
 }
 
 int ledAverageChoice( unsigned long int avg)
@@ -166,7 +180,7 @@ int ledAverageChoice( unsigned long int avg)
 	if( COUNT_1< avg && avg < COUNT_2 )
 		return 5; // +25 cents!
 	
-	if( avg < COUNT_1))
+	if( (avg < COUNT_1))
 		return 6; // +30 cents!
 	
 	if( COUNT_7 < avg && avg < COUNT_8)
@@ -193,13 +207,18 @@ int ledAverageChoice( unsigned long int avg)
 void setup(void){
 	/*timer set up in this function, we'll need to configure tmr0 as a low priority 
 	interrupt to handle cases when it overruns before a CCP even occurs*/
-	//PIR1bits.TMR1 = 0;
-	//IPR1bits.TMR1IP = 0;
+	T1CON = 0x49;
+	PIR1bits.TMR1IF = 0;
+	
+	IPR1bits.TMR1IP = 0;
 	//timer 1 must be in timer mode or synchronized mode
 
-	/*make sure to set the appropriate pins for outputs using the TRIS
-	registers
-	*/
+
+	//Setup LED ports
+	TRISD = 0x00;
+	TRISA = 0x00;
+	PORTD = 0x00;
+	PORTA = 0x00;//initially output nothing
 	tmr_overflow = 0; /* this will be used to track the number of times 
 						that tmr1 overflows. Used for calculation only*/
 	
@@ -215,19 +234,10 @@ void setup(void){
 //	CCP1CON &= 0xF0;//reset the CCP module (possibly unecessary)
 	CCP1CON |= 0x04; //select capture mode, event on every falling edge
 	
-	//Setup LED ports
-	TRISD = 0x00;
-	TRISA = 0x00;
-	PORTD = 0x00;
-	PORTA = 0x00;
-	
-	
-
-
-
 }
 
 
 void main(void){
 	setup();
+	while(1);
 }
