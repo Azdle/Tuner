@@ -14,7 +14,9 @@ void hi_isr(void);
 void lo_isr(void);
 
 #define CCP1IF PIR1bits.CCP1IF 
-//using 16 MHz Fosc (48 MHz Clock)
+//adjust to 4 MHz Instruction 
+//using 16 MHz Instruction Cycle (48 MHz Clock)
+#define COUNT_0 3
 #define COUNT_1 35790	//lowest cycle count (highest frequency)
 #define COUNT_2 35893
 #define COUNT_3 35996
@@ -27,7 +29,7 @@ void lo_isr(void);
 #define COUNT_10 36733
 #define COUNT_11 36840
 #define COUNT_12 36946 	//highest cycle count (lowest frequency)
-
+#define COUNT_13 90000
 #define size 5 //size of the array being used.
 int tmr_overflow;//used for tmr overflow counts
 unsigned long int values[size];//May not need to have the items be this large
@@ -52,9 +54,9 @@ void hi_isr(void)
 		if(init_counter < size)//first size iterations will not yield an output
 		{
 				int spot = count++;
-				CCPIF = 0;
+				CCP1IF = 0;
 				count = count % size;
-				values[spot] = CCPR1
+				values[spot] = CCPR1;
 				sum = sum + CCPR1;
 		
 		}
@@ -69,58 +71,65 @@ void hi_isr(void)
 		else		
 		{
 			int place = count++;
-			count = count % 5;//this will break the above if statement, since count will never be 5
+			count = count % size;//this will break the above if statement, since count will never be 5
 			CCP1IF = 0;
 			sum = sum - values[place];//remove the previous value of the running sum
 			values[place] = CCPR1;
 			sum = sum + values[place];
 			//need to check for tmr1 overflows and calculate those in this section.
 			avg = sum/size;
-
+			PORTD = 0x00;//reset LED's to off
+			PORTA &= 0xC0;
+			PORTEbits.RE0 = 0;
 			switch(ledAverageChoice(avg))
 			{
-			case 1:
-				//set appropriate LED's
+			case 1://
+				PORTDbits.RD1 = 1; //+5 cents
 				return;
 			
 			case 2:
-				//set appropriate LED's
+				PORTDbits.RD2 = 1; //+10 cents
 				return;
 			case 3:
-				//set appropriate LED's
+				PORTDbits.RD3 = 1; //+15 cents
 				return;
 			case 4:
-				//set appropriate LED's
+				PORTDbits.RD4 = 1; //+20 cents
 				return;
 			case 5:
-				//set appropriate LED's
+				PORTDbits.RD5 = 1; //+25 cents
 				return;
 			case 6:
-				//set appropriate LED's
+				PORTDbits.RD0 = 1; //+30 cents
 				return;
 			case 7:
-				//set appropriate LED's
+				PORTAbits.RA0 = 1; //-5 cents
 				return;
 			case 8:
-				//set appropriate LED's
+				PORTAbits.RA1 = 1; //-10 cents
 				return;
 			
 			case 9:
-				//set appropriate LED's
+				PORTAbits.RA2 = 1; //-15 cents
 				return;
 			case 10:
-				//set appropriate LED's
+				PORTAbits.RA3 = 1; //-20 cents
 				return;
 			case 11:
-				//set appropriate LED's
+				PORTAbits.RA4 = 1; //-25 cents
 				return;
 			case 12:
-				//set appropriate LED's
+				PORTAbits.RA5 = 1; //-30 cents
+				return;
+			case 13:
+				PORTDbits.RD0 = 1; ;//0 Cents
 				return;
 
 			default:
-				PORTD = 0xFF;//set all LED's to indicate an error
-				PORTA = 0xFF;
+				PORTD = 0xC0;//set LED's to indicate an error
+				//PORTA |= 0x3F;
+				PORTEbits.RE0 = 1;
+				
 				return;
 			}											
 		}
@@ -144,7 +153,7 @@ void lo_isr_entry(void)
 #pragma code
 #pragma interruptlow lo_isr
 void lo_isr(void){
-	//This section of code handles when TMR0 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
+	//This section of code handles when TMR1 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
 	int i;
 	INTCONbits.GIEH = 0;
 	count = 0;
@@ -158,55 +167,56 @@ void lo_isr(void){
 	INTCONbits.GIEH = 0;
 }
 
-int ledAverageChoice( unsigned long int avg)
+unsigned int ledAverageChoice( unsigned long int avg)
 {
 	//translates the avg value from CCP to a case value for led io
 	//30 cents must be displayed through the cases inside the interrupt, below and above
-	if(COUNT_6 < avg && avg < COUNT_7)
+	if(COUNT_6 <= avg && avg < COUNT_7)
 		return 13; // perfect (+0 cents)!
 		
-	if(COUNT_5 < avg && avg < COUNT_6)
+	if(COUNT_5 <= avg && avg < COUNT_6)
 		return 1; // +5 cents!
 	
-	if(COUNT_4 < avg && avg < COUNT_5 )
+	if(COUNT_4 <= avg && avg < COUNT_5 )
 		return 2; // +10 cents!
 	
-	if( COUNT_3< avg && avg <COUNT_4 )
+	if( COUNT_3 <= avg && avg <COUNT_4 )
 		return 3; // +15 cents!
 	
-	if( COUNT_2<avg && avg < COUNT_3)
+	if( COUNT_2 <= avg && avg < COUNT_3)
 		return 4; // +20 cents!
 	
-	if( COUNT_1< avg && avg < COUNT_2 )
+	if( COUNT_1 <= avg && avg < COUNT_2 )
 		return 5; // +25 cents!
 	
-	if( (avg < COUNT_1))
+	if( (COUNT_0 <= avg && avg < COUNT_1))
 		return 6; // +30 cents!
 	
-	if( COUNT_7 < avg && avg < COUNT_8)
+	if( COUNT_7 <= avg && avg < COUNT_8)
 		return 7; // -5 cents!
 	
-	if( COUNT_8 < avg && avg < COUNT_9 )
+	if( COUNT_8 <= avg && avg < COUNT_9 )
 		return 8; // -10 cents!
 	
-	if( COUNT_9< avg && avg < COUNT_10 )
+	if( COUNT_9 <= avg && avg < COUNT_10 )
 		return 9; // -15 cents!
 	
-	if( COUNT_10< avg && avg <COUNT_11 )
+	if( COUNT_10 <= avg && avg <COUNT_11 )
 		return 10; // -20 cents!
 	
-	if( COUNT_11< avg && avg <COUNT_12 )
+	if( COUNT_11 <= avg && avg <COUNT_12 )
 		return 11; // -25 cents!
 	
-	if(	avg > COUNT_12 )
+	if(	COUNT_12 <= avg && avg < COUNT_13 )
 		return 12; // -30 cents!
 	else return 15;
 }
 
 
 void setup(void){
-	/*timer set up in this function, we'll need to configure tmr0 as a low priority 
+	/*timer set up in this function, we'll need to configure tmr1 as a low priority 
 	interrupt to handle cases when it overruns before a CCP even occurs*/
+	UCFGbits.UPUEN = 0;
 	T1CON = 0x49;
 	PIR1bits.TMR1IF = 0;
 	
