@@ -75,7 +75,8 @@ tuner will be checking whether or not an input pitch matches 440Hz (A). The inpu
 either a microphone or a coax cable fed from an oscilloscope. The purpose of a tuner is not only to test
 on whether or not a pitch matches a note, but also to see if the input pitch is sharp or flat (whether the
 pitch is above or below the given pitch). Our tuner will indicate this information through a series of
-LEDs. We plan to use a microcontroller to analyze the input and control the output LEDs.
+LEDs. We plan to use a microcontroller to analyze the input and control the output LEDs. The LEDs will be able
+to monitor cents from -30 to +30, and will indicate if the values surpass these limits.
 \end{singlespace}
 
 
@@ -266,7 +267,13 @@ Figure \ref{micro_chart}  represents the basic flow of the microcontroller progr
 
 
 \section{Power Consumption}
-Power consumption was a big issue for this project because it is  meant to be run off of battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for more than 3 hours. The real time will be closer to eight hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs won't be constantly on.
+Power consumption was a big issue for this project because it is  meant to be run off of battery power.
+ We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints
+ we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, 
+ see Table \ref{Power}, the 150 mAh battery will power the circuit for more than 3 hours. The real time will be 
+ closer to eight hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs
+ won't be constantly on. Using the primary idle mode for the microcontroller we are able to reduce the consumption
+ as well, allowing us to use a smaller battery.
 
 \begin{table}[!h]
    \centering
@@ -289,6 +296,13 @@ Power consumption was a big issue for this project because it is  meant to be ru
 \footnotetext[3]{${{3.3 V - 2.3 V} \over 1 K\Omega } = 1 \mbox{mA} *\mbox{ N number of LEDs}$}
 \footnotetext[4]{MCP1703  Datasheet}
 
+\section{Conclusion}
+We will be using a Microchip PIC18 microcontroller with an analog filter setup to
+construct this music tuner. Our coding structure uses the CCP module to interrupt at
+certain intervals to calculate the cents of the input. We will first create a demo board
+and then move towards constructing the final board for our final design. We will have some
+difficulties when ascertaining the frequencies the LEDs actually light up for, and adjusting 
+those values to make sure it is accurate.
 
 \section{Group Member Workload}
 
