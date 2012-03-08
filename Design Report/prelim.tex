@@ -121,7 +121,24 @@ signal is to the desired pitch.
 \end{figure}
 
 \section{Analog Subcircuit}
-The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. See Figure \ref{analog_block} for overview of the usages, where each stage uses a single opamp. The Pre-Amp is simply a voltage follower with a blocking capacitor and a voltage divider on the input to reference the incoming signal to 1/2 $V_{CC}$. The Filter is a simple inverting amplifier configuration with filtering caps which creates a band pass filter. This was designed to have an $f_{cH }= 880 \mbox{Hz}$ and an $f_{cL} = 220 \mbox{Hz}$. Those frequencies being an Octave above and below the center frequency respectively. The Square Wave Generator is simply configured as a comparator referenced to 1/2 $V_{CC}$.  The square wave generator will drive the input from the previous stages to a level that can be detected by the microccontroller. The output of the comparator is then fed to the microcontroller to be processed further and interpreted.
+<<<<<<< HEAD
+
+The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. This IC was selected because it is able to be run off a single supply, is designed to recover from satruation quickly when used as a comparator, and low price. See Figure \ref{analog_block} for overview of the usages, where each stage uses a single opamp. A diagram of the circuit has been attached to the end of this report. The Pre-Amp is simply a voltage follower with a blocking capacitor and a voltage divider on the input to reference the incoming signal to 1/2 $V_{CC}$. The Filter is a simple inverting amplifier configuration with filtering caps which creates a band pass filter. This was designed to have an $f_{cH }= 880 \mbox{Hz}$ and an $f_{cL} = 220 \mbox{Hz}$. Those frequencies being an Octave above and below the center frequency respectively. The Square Wave Generator is simply configured as a comparator refrenced to 1/2 $V_{CC}$. The square wave generator will drive the input from the previous stages to a level that can be detected by the microcontroller. The output of the comparator is then fed to the microcontroller to be processed further and interpreted.
+
+The values of the circuit were found using the following equations: 
+\begin{equation}
+A = -{ R_2 \over -R_1}
+\end{equation}
+\begin{equation}
+f_{c1} = {1 \over {2 \pi R_1 C_1}}
+\end{equation}
+\begin{equation}
+f_{c2} = {1 \over {2 \pi R_2 C_2}}
+\end{equation}
+
+
+A simulation of the analog subcircuit has been attached.
+>>>>>>> ac0088efc530a852bd9bef445eec8c5c20b6683b
 
 \begin{figure}[H]
 \centering
@@ -297,6 +314,9 @@ Power consumption was a big issue for this project because it is  meant to be ru
 \footnotetext[4]{MCP1703  Datasheet}
 
 \section{BOM}
+Table \ref{bom} displays the pricing for the parts that we will require in order to construct our final design. We are able to
+receive free samples of the PIC18F4550, MPC6004 and MPC1703 due to our board requirements. Most of these parts will be ordered online,
+with the microcontroller, operational amplifier, and regulator ordered from Microchip, and the other parts from DigiKey. 
 \begin{table}[!h]
    \centering
     \begin{tabular}{|r|r|}
