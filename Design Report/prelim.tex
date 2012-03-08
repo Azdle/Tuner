@@ -85,10 +85,10 @@ LEDs. We plan to use a microcontroller to analyze the input and control the outp
 The methodology for finding pitch in our tuner is largely based upon the theory behind musical tones
 and how those pitches are measured.
 
-The pitch we were measuring is called A440, which is a standard tuning pitch for musical instruments.
+The pitch we are measuring is called A440, which is a standard tuning pitch for musical instruments.
 The 440 denotes the frequency in Hz of the pitch, which is called A by convention. An octave is defined
 as a ratio of 2:1 between 2 pitch frequencies. In this case, the pitch A which is an octave above has a
-frequency of 880 Hz while the pitch A below the standard A has a frequency of 220Hz. Each octave
+frequency of 880 Hz, while the pitch A below the standard A has a frequency of 220Hz. Each octave
 is split into 12 'semitones', which are considered distinct pitches within the octave. Since we are
 trying to determine if the input is in tune (matching the 440Hz frequency) we require further precision
 past the semitone measurement. Thus, we need to measure the accuracy of the input pitch using the
@@ -106,9 +106,9 @@ generator (microphone input will need a few more steps), the signal will pass th
 remove any noise from the signal. After being filtered, the signal will pass through a preamp, to boost
 the signal so that it can be further processed by the later stages. The signal is then sent to a square
 wave converter, which will take the analog signal and convert it into a series of square pulses to be
-handled by the microcontroller. If necessary there may also be an output buffer stage. The microcontroller
+handled by the microcontroller. The microcontroller
 will take the signal generated from this stage and measure the frequency of the square pulses over a certain
-period of time. Using this information, the microcontroller will choose light up an LED to display how close the
+period of time. Using this information, the microcontroller will choose light up an LED array to display how close the
 signal is to the desired pitch.
 
 \begin{figure}[H]
@@ -119,7 +119,7 @@ signal is to the desired pitch.
 \end{figure}
 
 \section{Analog Subcircuit}
-The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. See Figure \ref{analog_block} for overview, each stage is one opamp. The Pre-Amp is simply a voltage follower with a blocking capacitor and a voltage divider on the input to reference the incoming signal to 1/2 $V_{CC}$. The Filter is a simple inverting amplifier configuration with filtering caps which creates a band pass filter. This was designed to have an $f_{cH }= 880 \mbox{Hz}$ and an $f_{cL} = 220 \mbox{Hz}$. Those frequencies being an Octive above and below the center frequency respectively. The Square Wave Generator is simply configured as a comparator refrenced to 1/2 $V_{CC}$. The output of which is then fed to the microcontroller.
+The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. See Figure \ref{analog_block} for overview of the usages, where each stage uses a single opamp. The Pre-Amp is simply a voltage follower with a blocking capacitor and a voltage divider on the input to reference the incoming signal to 1/2 $V_{CC}$. The Filter is a simple inverting amplifier configuration with filtering caps which creates a band pass filter. This was designed to have an $f_{cH }= 880 \mbox{Hz}$ and an $f_{cL} = 220 \mbox{Hz}$. Those frequencies being an Octive above and below the center frequency respectively. The Square Wave Generator is simply configured as a comparator refrenced to 1/2 $V_{CC}$. The output of the comparator is then fed to the microcontroller to be processed further and interpreted.
 
 \begin{figure}[H]
 \centering
@@ -130,12 +130,12 @@ The analog portion of the circuit is a single IC consisting of four operational 
 
 \section{Timing}
 
-In order to calculate the frequency of a specific cent frequency, the following equation was used:
+In order to calculate the value of a specific cent frequency, the following equation was used:
 
 \begin{equation}
 b = a * 2^{n \over 1200}
 \end{equation}
-
+%Switch 'lower' and 'freq' - I disagree.
 where b is the desired frequency, a is a lower frequency than b, and n is the number of cents in between
 a and b. For the positive cent range, we used a = 440Hz and the above formula where n was the number
 of cents above 440Hz. For the negative cent range, a = 220Hz and n was calculated from
@@ -146,7 +146,7 @@ n = 1200 - |\mbox{cent offset}|
 
 so if we wanted to find the frequency of -5 cents from A440, n would be 1195. The frequencies found
 from this formula can be seen in Table \ref{Freq_Table}. Knowing the frequencies corresponding to the cent ranges
-is useful, but it must be manipulated somewhat for the microcontroller to interpret. The CCP module
+is useful, but they must be manipulated somewhat for the microcontroller to interpret. The CCP module
 on the microcontroller measures events by using an internal timer which increments on the instruction
 clock (Fosc / 4). Therefore, the frequencies calculated in the previous stage need to be converted into a
 number of instruction cycles. The following equation describes this calculation:
@@ -159,7 +159,7 @@ The converted values calculated from this equation can also be found in Table \r
 internal clock frequency, is 16MHz. This means that there are $4 *106$ instructions per second. We could
 increase the resolution of our measurements by increasing the clock speed of the microcontroller, but
 we felt that keeping our design low powered was more important than the increase in resolution gained
-by using higher voltage on the microcontroller.
+by using a higher voltage on the microcontroller.
 
 \begin{table}
    \centering
@@ -194,7 +194,7 @@ at most 1-2 cycles, which we deemed as an acceptable imprecision.
 
 
 
-Our tuner will take an input signal to be tested. When the input pitch matches A-440Hz, the
+Our tuner will take an input signal in the form of a square wave. to be tested. When the input pitch matches A-440Hz, the
 center LED will light up. As the pitch moves out of tune, other LEDs will light up to signify how sharp or
 flat the pitch is compared to A. These LED's will be set to 5 cent intervals ranging from -30 to 30 cents
 around A. Anything above or below these ranges will simply light up the leftmost or rightmost LED
@@ -219,23 +219,25 @@ configured to increment on each instruction cycle to ensure the highest resoluti
 was chosen because it had the ability to hold 16 bit numbers, which was necessary for the number of
 cycles we needed to count. This timer also works in conjunction with the CCP module, which will be
 discussed in greater detail later. We used the timer to count the number of cycles for each period of the
-input signal, but it also had another important function. If the timer were to roll over (meaning that it
-attempted to increment above 216), then the program will vector to an interrupt and reset the averaging
+input signal, but it also has another important function. If the timer were to roll over (meaning that it
+attempted to increment above $2^16$), then the program will vector to an interrupt and reset the averaging
 function used in the CCP interrupt. If this event occurred, then that would mean that the input signal
 was no longer transmitting, meaning that it would be necessary to clear out the stored averaging values
-in order to maintain a clear reading the next time an input was detected on the port.
+in order to maintain a clear reading the next time an input was detected on the port. More information on
+the TMR1 module can be found on page 143 of the PIC1f4550 datasheet.
 
 The CCP (Capture, Control , Pulse Width Modulation) Module has a wide variety of uses. For
 this application, only the capture mode will be used. While configured in the capture mode, the
-microcontroller waits for a trigger on an event occurring on a specific port. This event, which
+microcontroller waits for a trigger on an event occurring on a specific port of the device. This event, which
 the user can define as a falling or rising edge transition, will generate an interrupt and vector the CPU of
 the microcontroller away from the main function. We chose to configure the capture module to copy
 the contents of the TMR1 counter register into the CCP1REG (a register for use by the CCP module).
-This transfer is done automatically by the microcontroller. Basically this interrupt is generated for every
+This transfer is performed automatically by the microcontroller. Basically, this interrupt is generated for every complete
 cycle of the input signal, meaning that the timer module will record the number of instruction cycles
 for each period of the signal. The cycle counts corresponding to the cent ranges are shown in Table
 \ref{Freq_Table}. The cycle count is processed within the interrupt and averaged to ensure that the measurements
-accurately represent the frequency of the input signal.
+accurately represent the frequency of the input signal. More information on the CCP modules can be found
+on page 129 of the PIC18f4550 datasheet.
 
 The final module that our code utilizes is called the Primary Idle Mode. Since the majority of time
 our code is spent waiting on interrupts to be generated, much of the microcontroller can be disabled
@@ -244,12 +246,15 @@ the PIC18f4550. This configuration disables the CPU of the microcontroller, mean
 instructions will be processed. Although the CPU is disabled, the peripheral devices, such as the
 timer modules, will continue to be clocked from the primary clock source. There is a bit of a delay
 in restarting the microcontroller from the idle mode, but since the TMR1 module is copied over to
-the CCP1REG in hardware, this does not affect the accuracy of our measurements. Also, since our
+the CCP1REG by internal hardware, this does not affect the accuracy of our measurements. Also, since our
 instruction clock was on the order of about 3dB faster than an octave above the desired pitch frequency,
 we assumed that the wake up time was fairly negligible. We made the same general assumption about
-the interrupt service routine which calculates the average value.
+the interrupt service routine which calculates the average value. In other words, given the fact that we
+will be executing approximately 9000 cycles for the desired pitch range, our ISR will not overlap 2
+sequential CCP events. More information on the Idle modes can be found on page 40 of the 
+PIC18f4550 datasheet.
 
-Figure \ref{micro_chart} shows an overview of how the code will function.
+Figure \ref{micro_chart}  represents the basic flow of the microcontroller program.  As can be seen from the figure, after the setup and main functions have been run, the microcontroller enters an idle mode.  This idle mode is exited when an interrupt is generated.  If the interrupt is a CCP interrupt, the average cycle count will be updated.  This new average will then be used to decide which LEDs should be turned on.  The LEDs are update and program control returns to the main loop.  If a TMR1 interrupt is generated, both the average and the display will be reset, and program control will be returned to the main loop.
 
 \begin{figure}[H]
 \centering
@@ -261,8 +266,6 @@ Figure \ref{micro_chart} shows an overview of how the code will function.
 
 \section{Power Consumption}
 Power consumption was a big issue for this project because it is  meant to be run off of battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for almost 3 hours. The real time will be closer to seven hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs won't be constantly on.
-
-\clearpage
 
 \begin{table}[!h]
    \centering
