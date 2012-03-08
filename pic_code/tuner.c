@@ -15,7 +15,6 @@ void lo_isr(void);
 
 #define CCP1IF PIR1bits.CCP1IF 
 //adjust to 4 MHz Instruction 
-//using 16 MHz Instruction Cycle (48 MHz Clock)
 #define COUNT_0 8922		//lowest cycle count (highest frequency)
 #define COUNT_1 8948
 #define COUNT_2 8974

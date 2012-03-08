@@ -157,7 +157,7 @@ number of instruction cycles. The following equation describes this calculation:
 \end{equation}
 
 The converted values calculated from this equation can also be found in Table \ref{Freq_Table}. The Fosc, which is the
-internal clock frequency, is 16MHz. This means that there are $4 *106$ instructions per second. We could
+internal clock frequency, is 16MHz. This means that there are $4 *10^6$ instructions per second. We could
 increase the resolution of our measurements by increasing the clock speed of the microcontroller, but
 we felt that keeping our design low powered was more important than the increase in resolution gained
 by using a higher voltage on the microcontroller.
@@ -221,7 +221,7 @@ was chosen because it had the ability to hold 16 bit numbers, which was necessar
 cycles we needed to count. This timer also works in conjunction with the CCP module, which will be
 discussed in greater detail later. We used the timer to count the number of cycles for each period of the
 input signal, but it also has another important function. If the timer were to roll over (meaning that it
-attempted to increment above $2^16$), then the program will vector to an interrupt and reset the averaging
+attempted to increment above $2^{16}$), then the program will vector to an interrupt and reset the averaging
 function used in the CCP interrupt. If this event occurred, then that would mean that the input signal
 was no longer transmitting, meaning that it would be necessary to clear out the stored averaging values
 in order to maintain a clear reading the next time an input was detected on the port. More information on
