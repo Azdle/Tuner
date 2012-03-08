@@ -222,7 +222,7 @@ was chosen because it had the ability to hold 16 bit numbers, which was necessar
 cycles we needed to count. This timer also works in conjunction with the CCP module, which will be
 discussed in greater detail later. We used the timer to count the number of cycles for each period of the
 input signal, but it also has another important function. If the timer were to roll over (meaning that it
-attempted to increment above $2^16$), then the program will vector to an interrupt and reset the averaging
+attempted to increment above $2^{16}$), then the program will vector to an interrupt and reset the averaging
 function used in the CCP interrupt. If this event occurred, then that would mean that the input signal
 was no longer transmitting, meaning that it would be necessary to clear out the stored averaging values
 in order to maintain a clear reading the next time an input was detected on the port. More information on
