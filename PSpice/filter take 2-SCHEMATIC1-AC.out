@@ -1,7 +1,7 @@
-
-**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
 
- ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+**** 03/01/12 08:35:23 *********** Evaluation PSpice (Nov 1999) **************
+
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2-schematic1-ac.sim ] 
 
 
  ****     CIRCUIT DESCRIPTION
@@ -12,7 +12,7 @@
 
 
 
-** Creating circuit file "filter take 2-SCHEMATIC1-AC.sim.cir" 
+** Creating circuit file "filter take 2-schematic1-ac.sim.cir" 
 ** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
 
 *Libraries: 
@@ -43,7 +43,7 @@ X_U3         1/2VCC N05487 VCC 0 N05811 uA741
 C_C6         0 1/2VCC  1n  
 R_R8         0 N05811  100k  
 
-**** RESUMING "filter take 2-SCHEMATIC1-AC.sim.cir" ****
+**** RESUMING "filter take 2-schematic1-ac.sim.cir" ****
 .INC "filter take 2-SCHEMATIC1.als"
 
 
@@ -69,12 +69,12 @@ _    _(VCC=VCC)
 _    _(VCC=VCC)
 .ENDALIASES
 
-**** RESUMING "filter take 2-SCHEMATIC1-AC.sim.cir" ****
+**** RESUMING "filter take 2-schematic1-ac.sim.cir" ****
 .END
 
-**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+**** 03/01/12 08:35:23 *********** Evaluation PSpice (Nov 1999) **************
 
- ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2-schematic1-ac.sim ] 
 
 
  ****     Diode MODEL PARAMETERS
@@ -90,9 +90,9 @@ _    _(VCC=VCC)
           RS    1               1               1            
 
 
-**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+**** 03/01/12 08:35:23 *********** Evaluation PSpice (Nov 1999) **************
 
- ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2-schematic1-ac.sim ] 
 
 
  ****     BJT MODEL PARAMETERS
@@ -114,9 +114,9 @@ _    _(VCC=VCC)
            D     .87             .87             .87         
 
 
-**** 02/11/12 16:22:16 *********** Evaluation PSpice (Nov 1999) **************
+**** 03/01/12 08:35:23 *********** Evaluation PSpice (Nov 1999) **************
 
- ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Documents\UMN\EE3102\PSpice\filter take 2-SCHEMATIC1-AC.sim ] 
+ ** Profile: "SCHEMATIC1-AC"  [ C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2-schematic1-ac.sim ] 
 
 
  ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
@@ -207,5 +207,5 @@ _    _(VCC=VCC)
 
           JOB CONCLUDED
 
-          TOTAL JOB TIME            1.11
+          TOTAL JOB TIME            1.15
 
