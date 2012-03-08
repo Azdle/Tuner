@@ -39,11 +39,29 @@
   (GlobalState
     (FileView
       (Path "Design Resources")
+      (Path "Design Resources"
+         "C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2.dsn")
+      (Path "Design Resources"
+         "C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2.dsn"
+         "SCHEMATIC1")
       (Path "Outputs")
-      (Select "Design Resources"))
+      (Select "Design Resources"
+         "C:\Users\Patrick\Wuala\Electronics\EE3102\PSpice\filter take 2.dsn"
+         "SCHEMATIC1" "PAGE1"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
       (Frame
-        (Placement "44 2 3 160 616 -8 -30 0 200 0 405"))
-      (Tab 0))))
+        (Placement "44 0 1 160 616 -8 -30 0 200 0 405"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -30 50 1150 50 489")
+        (Scroll "0 30")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path
+         "C:\USERS\PATRICK\WUALA\ELECTRONICS\EE3102\PSPICE\FILTER TAKE 2.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "PAGE1"))))
