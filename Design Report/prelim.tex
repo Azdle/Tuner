@@ -267,7 +267,13 @@ Figure \ref{micro_chart}  represents the basic flow of the microcontroller progr
 
 
 \section{Power Consumption}
-Power consumption was a big issue for this project because it is  meant to be run off of battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for more than 3 hours. The real time will be closer to eight hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs won't be constantly on.
+Power consumption was a big issue for this project because it is  meant to be run off of battery power.
+ We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints
+ we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, 
+ see Table \ref{Power}, the 150 mAh battery will power the circuit for more than 3 hours. The real time will be 
+ closer to eight hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs
+ won't be constantly on. Using the primary idle mode for the microcontroller we are able to reduce the consumption
+ as well, allowing us to use a smaller battery.
 
 \begin{table}[!h]
    \centering
@@ -316,8 +322,8 @@ We will be using a Microchip PIC18 microcontroller with an analog filter setup t
 construct this music tuner. Our coding structure uses the CCP module to interrupt at
 certain intervals to calculate the cents of the input. We will first create a demo board
 and then move towards constructing the final board for our final design. We will have some
-difficulties when ascertaining the frequencies the LEDs actually light up for, and adjusting those values
-to make sure it is accurate.
+difficulties when ascertaining the frequencies the LEDs actually light up for, and adjusting 
+those values to make sure it is accurate.
 
 \section{Group Member Workload}
 
