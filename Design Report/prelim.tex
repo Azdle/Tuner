@@ -20,7 +20,7 @@
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
 
 
-\title{Lab 8:\\RC Step Response} %Metadata
+\title{EE3102 Design Report} %Metadata
 \author{Patrick Barrett}
 \date{}                                           % Activate to display a given date or no date
 
@@ -101,14 +101,15 @@ intervals. This specification of the interval of measurement was given by the pr
 it does make sense given that there is little audible difference between adjacent cent frequencies.
 
 \section{Overview}
-The basic flow of the signal is shown in Figure \ref{block_overview}. After the input is received from the oscilloscope
-(microphone input will need a few more steps), the signal will pass through a bandpass filter to help
+The basic flow of the signal is shown in Figure \ref{block_overview}. After the input is received from the function 
+generator (microphone input will need a few more steps), the signal will pass through a bandpass filter to help
 remove any noise from the signal. After being filtered, the signal will pass through a preamp, to boost
 the signal so that it can be further processed by the later stages. The signal is then sent to a square
 wave converter, which will take the analog signal and convert it into a series of square pulses to be
 handled by the microcontroller. If necessary there may also be an output buffer stage. The microcontroller
-will take the signal generated from this stage and measure the frequency of the square pulses over a certain period of time. Using this information, the
-microcontroller will choose light up an LED to display how close the signal is to the desired pitch.
+will take the signal generated from this stage and measure the frequency of the square pulses over a certain
+period of time. Using this information, the microcontroller will choose light up an LED to display how close the
+signal is to the desired pitch.
 
 \begin{figure}[H]
 \centering
@@ -118,6 +119,8 @@ microcontroller will choose light up an LED to display how close the signal is t
 \end{figure}
 
 \section{Analog Subcircuit}
+The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. See Figure \ref{analog_block} for overview, each stage is one opamp. The Pre-Amp is simply a voltage follower. The Filter is a simple inverting amplifier configuration with filtering caps. The Square Wave Generator is simply configured as a comparator. The output of which is then fed to the microcontroller.
+
 \begin{figure}[H]
 \centering
 	\includegraphics[width=6in]{"Analog Subcircuit"}
@@ -158,11 +161,6 @@ increase the resolution of our measurements by increasing the clock speed of the
 we felt that keeping our design low powered was more important than the increase in resolution gained
 by using higher voltage on the microcontroller.
 
-The lower and upper bounds were calculated by averaging adjacent cycle counts. It is important to
-note that the cycle counts are whole numbers since it is not possible to have a fractional cycle. All cycle
-values were rounded to the nearest integer value, which means that the ranges intervals may be off by
-at most 1-2 cycles, which we deemed as an acceptable imprecision.
-
 \begin{table}
    \centering
     \begin{tabular}{|r|l|l|l|l|}
@@ -188,6 +186,13 @@ at most 1-2 cycles, which we deemed as an acceptable imprecision.
 	\caption{Cent Step Calculations}
 	\label{Freq_Table} 
 \end{table}
+
+The lower and upper bounds were calculated by averaging adjacent cycle counts. It is important to
+note that the cycle counts are whole numbers since it is not possible to have a fractional cycle. All cycle
+values were rounded to the nearest integer value, which means that the ranges intervals may be off by
+at most 1-2 cycles, which we deemed as an acceptable imprecision.
+
+
 
 Our tuner will take an input signal to be tested. When the input pitch matches A-440Hz, the
 center LED will light up. As the pitch moves out of tune, other LEDs will light up to signify how sharp or
@@ -229,7 +234,7 @@ the contents of the TMR1 counter register into the CCP1REG (a register for use b
 This transfer is done automatically by the microcontroller. Basically this interrupt is generated for every
 cycle of the input signal, meaning that the timer module will record the number of instruction cycles
 for each period of the signal. The cycle counts corresponding to the cent ranges are shown in Table
-X.X. The cycle count is processed within the interrupt and averaged to ensure that the measurements
+\ref{Freq_Table}. The cycle count is processed within the interrupt and averaged to ensure that the measurements
 accurately represent the frequency of the input signal.
 
 The final module that our code utilizes is called the Primary Idle Mode. Since the majority of time
@@ -244,5 +249,69 @@ the CCP1REG in hardware, this does not affect the accuracy of our measurements. 
 instruction clock was on the order of about 3dB faster than an octave above the desired pitch frequency,
 we assumed that the wake up time was fairly negligible. We made the same general assumption about
 the interrupt service routine which calculates the average value.
+
+\begin{figure}[H]
+\centering
+	\includegraphics[height=4in]{"MicroChart"}
+	\caption{Logic Diagram}
+	\label{micro_chart} 
+\end{figure}
+
+
+\section{Power Consumption}
+Power consumption was a big issue for this project because it is  meant to be run off og battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for almost 3 hours. The real time will be closer to seven hours as we will be spending most of our time with the microcontroller sleeping.
+
+\clearpage
+
+\begin{table}[!h]
+   \centering
+    \begin{tabular}{|r|r|r|r|r|}
+        \hline
+         & Current Con.& Current Con.& Current Con. & Current Con. \\
+        Device & (Worst Case)& (Typical, Active)& (Typical, Sleep) & (Typical, No Input) \\ \hline
+       $\mu$C & 35 mA & 16 mA & 6.2 mA & 6.2 mA \\ \hline
+       Analog Subcircuit & 17 $\mu$A & 17 $\mu$A & 17 $\mu$A & 17 $\mu$A \\ \hline
+       LEDs & 23.1 mA & 13.2 mA & 13.2 mA & 3.3 mA \\ \hline
+       Power Regulator & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A \\ \hline 
+       $Total$ & 58.2 mA & 29.3 mA & 19.5 mA & 9.6 mA\\ \hline 
+    \end{tabular}
+	\caption{Power Consumption}
+	\label{Power} 
+\end{table}
+
+
+\section{Group Member Workload}
+
+\begin{singlespace}
+\begin{description}
+  \item[Patrick Barrett] \hfill \\
+	\begin{itemize}
+	  \item Analog Circuit Design
+	  \item Analog Simulation
+	  \item Schmatic Capture
+	  \item Parts Selection
+	  \item PCB Layout
+	  \item Design Report
+	\end{itemize}
+  \item[Mark Pennebecker] \hfill \\
+	\begin{itemize}
+	  \item Microcontroller Selection/Setup
+	  \item Programming
+	  \item Design Report
+	\end{itemize}
+
+  \item[Kayiita Johnson] \hfill \\
+	\begin{itemize}
+	  \item Programming
+	\end{itemize}
+
+  \item[Prashant Dhakal] \hfill \\
+	\begin{itemize}
+	  \item Simulation
+	\end{itemize}
+
+\end{description}
+\end{singlespace}
+
 
 \end{document}  

@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.2 r9819"
-   sodipodi:docname="Block Overview.svg">
+   sodipodi:docname="Analog Subcircuit.svg">
   <defs
      id="defs4">
     <marker
@@ -82,10 +82,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
-     inkscape:cx="233.99368"
+     inkscape:cx="419.84155"
      inkscape:cy="0.49769455"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3812"
      showgrid="false"
      inkscape:object-paths="true"
      inkscape:snap-intersection-paths="true"
@@ -147,17 +147,13 @@
       <text
          sodipodi:linespacing="125%"
          id="text3761"
-         y="166.05017"
-         x="374.19104"
+         y="178.55017"
+         x="372.80917"
          style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           y="166.05017"
-           x="374.19104"
-           id="tspan3763"
-           sodipodi:role="line">Audio-Range</tspan><tspan
            id="tspan3805"
-           y="191.05017"
-           x="374.19104"
+           y="178.55017"
+           x="372.80917"
            sodipodi:role="line">Filter</tspan></text>
       <rect
          y="128.21896"
@@ -173,14 +169,18 @@
       <text
          sodipodi:linespacing="125%"
          id="text3765"
-         y="160.63969"
-         x="444.422"
-         style="font-size:20px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+         y="150.00493"
+         x="505.04697"
+         style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
          xml:space="preserve"><tspan
-           y="160.63969"
-           x="444.422"
+           y="150.00493"
+           x="505.04697"
            id="tspan3767"
-           sodipodi:role="line">Square Wave</tspan></text>
+           sodipodi:role="line">Square Wave</tspan><tspan
+           y="175.00493"
+           x="505.04697"
+           sodipodi:role="line"
+           id="tspan3031">Generator</tspan></text>
       <rect
          y="112.05653"
          x="432.85751"
