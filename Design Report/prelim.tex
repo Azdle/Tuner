@@ -123,7 +123,7 @@ signal is to the desired pitch.
 \section{Analog Subcircuit}
 The analog portion of the circuit is a single IC consisting of four operational amplifiers, three of which are used. This IC was selected because it is able to be run off a single supply, is designed to recover from satruation quickly when used as a comparator, and low price. See Figure \ref{analog_block} for overview of the usages, where each stage uses a single opamp. A diagram of the circuit has been attached to the end of this report. The Pre-Amp is simply a voltage follower with a blocking capacitor and a voltage divider on the input to reference the incoming signal to 1/2 $V_{CC}$. The Filter is a simple inverting amplifier configuration with filtering caps which creates a band pass filter. This was designed to have an $f_{cH }= 880 \mbox{Hz}$ and an $f_{cL} = 220 \mbox{Hz}$. Those frequencies being an Octive above and below the center frequency respectively. The Square Wave Generator is simply configured as a comparator refrenced to 1/2 $V_{CC}$. The output of the comparator is then fed to the microcontroller to be processed further and interpreted.
 
-The vlaues of the circuit were found using the following equations: 
+The values of the circuit were found using the following equations: 
 \begin{equation}
 A = -{ R_2 \over -R_1}
 \end{equation}
