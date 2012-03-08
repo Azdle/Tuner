@@ -1,4 +1,4 @@
-#include <p18f4550.h> 
+include <p18f4550.h> 
 
 
 #pragma config FOSC=HSPLL_HS //Using XMHz crystal(above 4 MHz, assuming 8 MHz)
@@ -16,20 +16,20 @@ void lo_isr(void);
 #define CCP1IF PIR1bits.CCP1IF 
 //adjust to 4 MHz Instruction 
 //using 16 MHz Instruction Cycle (48 MHz Clock)
-#define COUNT_0 3
-#define COUNT_1 35790	//lowest cycle count (highest frequency)
-#define COUNT_2 35893
-#define COUNT_3 35996
-#define COUNT_4 36099
-#define COUNT_5 36207
-#define COUNT_6 36312
-#define COUNT_7 36416
-#define COUNT_8 36521
-#define COUNT_9 36627
-#define COUNT_10 36733
-#define COUNT_11 36840
-#define COUNT_12 36946 	//highest cycle count (lowest frequency)
-#define COUNT_13 90000
+#define COUNT_0 8922		//lowest cycle count (highest frequency)
+#define COUNT_1 8948
+#define COUNT_2 8974
+#define COUNT_3 8999
+#define COUNT_4 9025
+#define COUNT_5 9052
+#define COUNT_6 9078
+#define COUNT_7 9104
+#define COUNT_8 9130
+#define COUNT_9 9157
+#define COUNT_10 9184
+#define COUNT_11 9210
+#define COUNT_12 9236 	
+#define COUNT_13 9263 //highest cycle count (lowest frequency)
 #define size 5 //size of the array being used.
 int tmr_overflow;//used for tmr overflow counts
 unsigned long int values[size];//May not need to have the items be this large
@@ -51,13 +51,15 @@ void hi_isr_entry(void)
 void hi_isr(void)
 { 
 	if(CCP1IF)
+		TMR1REG = 0x00;//reset the tmr1 register
 		if(init_counter < size)//first size iterations will not yield an output
 		{
 				int spot = count++;
 				CCP1IF = 0;
+				init_counter++;
 				count = count % size;
 				values[spot] = CCPR1;
-				sum = sum + CCPR1;
+				sum = sum + values[spot];
 		
 		}
 		//This will ensure that only 1 time in every 5 will output, not necessarily bad, but is it what we want?
@@ -71,59 +73,67 @@ void hi_isr(void)
 		else		
 		{
 			int place = count++;
-			count = count % size;//this will break the above if statement, since count will never be 5
+			count = count % size;
 			CCP1IF = 0;
 			sum = sum - values[place];//remove the previous value of the running sum
 			values[place] = CCPR1;
 			sum = sum + values[place];
-			//need to check for tmr1 overflows and calculate those in this section.
+			//TMR1 overflows are handled in the low priority interrupt
 			avg = sum/size;
 			PORTD = 0x00;//reset LED's to off
 			PORTA &= 0xC0;
 			PORTEbits.RE0 = 0;
 			switch(ledAverageChoice(avg))
 			{
-			case 1://
-				PORTDbits.RD1 = 1; //+5 cents
-				return;
-			
+			case 0:
+				PORTEbits.RE0 = 1; //Less than -30 cents
+				return;				
+			case 1:
+				PORTAbits.RA5 = 1; //-30 cents
+				return;	
 			case 2:
-				PORTDbits.RD2 = 1; //+10 cents
-				return;
-			case 3:
-				PORTDbits.RD3 = 1; //+15 cents
-				return;
-			case 4:
-				PORTDbits.RD4 = 1; //+20 cents
-				return;
-			case 5:
-				PORTDbits.RD5 = 1; //+25 cents
-				return;
-			case 6:
-				PORTDbits.RD0 = 1; //+30 cents
-				return;
-			case 7:
-				PORTAbits.RA0 = 1; //-5 cents
-				return;
-			case 8:
-				PORTAbits.RA1 = 1; //-10 cents
-				return;
-			
-			case 9:
-				PORTAbits.RA2 = 1; //-15 cents
-				return;
-			case 10:
-				PORTAbits.RA3 = 1; //-20 cents
-				return;
-			case 11:
 				PORTAbits.RA4 = 1; //-25 cents
 				return;
-			case 12:
-				PORTAbits.RA5 = 1; //-30 cents
+			case 3:
+				PORTAbits.RA3 = 1; //-20 cents
 				return;
-			case 13:
+			case 4:
+				PORTAbits.RA2 = 1; //-15 cents
+				return;
+			case 5:
+				PORTAbits.RA1 = 1; //-10 cents
+				return;
+			case 6:
+				PORTAbits.RA0 = 1; //-5 cents
+				return;
+			case 7:
 				PORTDbits.RD0 = 1; ;//0 Cents
 				return;
+			case 8:
+				PORTDbits.RD1 = 1; //+5 cents
+				return;
+			case 9:
+				PORTDbits.RD2 = 1; //+10 cents
+				return;
+			case 10:
+				PORTDbits.RD3 = 1; //+15 cents
+				return;
+			case 11:
+				PORTDbits.RD4 = 1; //+20 cents
+				return;
+			case 12:
+				PORTDbits.RD5 = 1; //+25 cents
+				return;
+			case 13:
+				PORTDbits.RD6 = 1; //+30 cents
+				return;
+			case 14:
+				PORTDbits.RD7 = 1; //More than 30 Cents
+				return;
+
+
+
+
 
 			default:
 				PORTD = 0xC0;//set LED's to indicate an error
@@ -136,7 +146,6 @@ void hi_isr(void)
 		OSCCONbits.IDLEN = 1; //PRI_IDLE modes
 		OSCCONbits.SCS1 = 0;
 		OSCCONbits.SCS0 = 0;
-		_asm SLEEP _endasm
 		
 }
 
@@ -153,12 +162,15 @@ void lo_isr_entry(void)
 #pragma code
 #pragma interruptlow lo_isr
 void lo_isr(void){
+	//probably want to add an if check to ensure that the timer1 interrupt occurs
+	TMR1REG = 0x00;//reset the tmr1 register
 	//This section of code handles when TMR1 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
 	int i;
 	INTCONbits.GIEH = 0;
 	count = 0;
 	PORTA = 0x00;
 	PORTD = 0x00;
+	init_counter = 0;
 	
 	for(i = 0; i <(size -1); i++)
 	{
@@ -171,44 +183,54 @@ unsigned int ledAverageChoice( unsigned long int avg)
 {
 	//translates the avg value from CCP to a case value for led io
 	//30 cents must be displayed through the cases inside the interrupt, below and above
-	if(COUNT_6 <= avg && avg < COUNT_7)
-		return 13; // perfect (+0 cents)!
+	
+
+	
+	if( avg < COUNT_0 )
+		return 14; //more than 30 cents
 		
-	if(COUNT_5 <= avg && avg < COUNT_6)
-		return 1; // +5 cents!
-	
-	if(COUNT_4 <= avg && avg < COUNT_5 )
-		return 2; // +10 cents!
-	
-	if( COUNT_3 <= avg && avg <COUNT_4 )
-		return 3; // +15 cents!
-	
-	if( COUNT_2 <= avg && avg < COUNT_3)
-		return 4; // +20 cents!
-	
-	if( COUNT_1 <= avg && avg < COUNT_2 )
-		return 5; // +25 cents!
-	
 	if( (COUNT_0 <= avg && avg < COUNT_1))
-		return 6; // +30 cents!
+		return 13; // +30 cents!
+		
+	if( COUNT_1 <= avg && avg < COUNT_2 )
+		return 12; // +25 cents!
+
+	if( COUNT_2 <= avg && avg < COUNT_3)
+		return 11; // +20 cents!
+		
+	if( COUNT_3 <= avg && avg <COUNT_4 )
+		return 10; // +15 cents!
+		
+	if(COUNT_4 <= avg && avg < COUNT_5 )
+		return 9; // +10 cents!
 	
-	if( COUNT_7 <= avg && avg < COUNT_8)
-		return 7; // -5 cents!
+	if(COUNT_5 <= avg && avg < COUNT_6)
+		return 8; // +5 cents!
+
+	if(COUNT_6 <= avg && avg < COUNT_7)
+		return 7; // perfect (+0 cents)!
+		
+	if( COUNT_7<= avg && avg < COUNT_8)
+		return 6; // -5 cents!
 	
 	if( COUNT_8 <= avg && avg < COUNT_9 )
-		return 8; // -10 cents!
+		return 5; // -10 cents!
 	
 	if( COUNT_9 <= avg && avg < COUNT_10 )
-		return 9; // -15 cents!
+		return 4; // -15 cents!
 	
 	if( COUNT_10 <= avg && avg <COUNT_11 )
-		return 10; // -20 cents!
+		return 3; // -20 cents!
 	
 	if( COUNT_11 <= avg && avg <COUNT_12 )
-		return 11; // -25 cents!
+		return 2; // -25 cents!
 	
 	if(	COUNT_12 <= avg && avg < COUNT_13 )
-		return 12; // -30 cents!
+		return 1; // -30 cents!
+	
+	if( avg > COUNT_13)
+		return 0;// less than 30 cents
+		
 	else return 15;
 }
 
@@ -249,5 +271,8 @@ void setup(void){
 
 void main(void){
 	setup();
-	while(1);
+	while(1)
+	{
+		_asm SLEEP _endasm
+	}
 }
