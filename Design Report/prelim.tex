@@ -15,6 +15,7 @@
 \usepackage{here}
 \usepackage{flafter}
 
+
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \newcommand{\superscript}[1]{\ensuremath{^{\textrm{#1}}}}
 \newcommand{\subscript}[1]{\ensuremath{_{\textrm{#1}}}}
@@ -258,14 +259,14 @@ Figure \ref{micro_chart}  represents the basic flow of the microcontroller progr
 
 \begin{figure}[H]
 \centering
-	\includegraphics[height=4in]{"MicroChart"}
+	\includegraphics[height=3.5in]{"MicroChart"}
 	\caption{Program Flow Diagram}
 	\label{micro_chart} 
 \end{figure}
 
 
 \section{Power Consumption}
-Power consumption was a big issue for this project because it is  meant to be run off of battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for almost 3 hours. The real time will be closer to seven hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs won't be constantly on.
+Power consumption was a big issue for this project because it is  meant to be run off of battery power. We will be powering the circuit from a rechargeable lithium polymer battery. Due to stock and size constraints we are limited to two options for capacity, 150 mAh and 3 Ah. Even if we assume the worst case calculations, see Table \ref{Power}, the 150 mAh battery will power the circuit for more than 3 hours. The real time will be closer to eight hours as we will be spending most of our time with the microcontroller sleeping and all the LEDs won't be constantly on.
 
 \begin{table}[!h]
    \centering
@@ -273,15 +274,20 @@ Power consumption was a big issue for this project because it is  meant to be ru
         \hline
          & Current Con.& Current Con.& Current Con. & Current Con. \\
         Device & (Worst Case)& (Typical, Active)& (Typical, Sleep) & (Typical, No Input) \\ \hline
-       $\mu$C & 35 mA & 16 mA & 6.2 mA & 6.2 mA \\ \hline
-       Analog Subcircuit & 17 $\mu$A & 17 $\mu$A & 17 $\mu$A & 17 $\mu$A \\ \hline
-       LEDs & 23.1 mA & 13.2 mA & 13.2 mA & 3.3 mA \\ \hline
-       Power Regulator & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A \\ \hline 
-       $Total$ & 58.2 mA & 29.3 mA & 19.5 mA & 9.6 mA\\ \hline 
+       $\mu$C \footnotemark & 35 mA & 16 mA & 6.2 mA & 6.2 mA \\ \hline
+       Analog Subcircuit \footnotemark & 680 $\mu$A & 400 $\mu$A & 400 $\mu$A & 400 $\mu$A \\ \hline
+       LEDs \footnotemark & 7 mA & 4 mA & 4 mA & 1 mA \\ \hline
+       Power Regulator \footnotemark & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A & 50 $\mu$A \\ \hline 
+       $Total$ & 42 mA & 20 mA & 11 mA & 8 mA\\ \hline 
     \end{tabular}
 	\caption{Power Consumption}
 	\label{Power} 
 \end{table}
+
+\footnotetext[1]{PIC18f4550 Datasheet Pages 375-376}
+\footnotetext[2]{MCP6001 Datasheet}
+\footnotetext[3]{${{3.3 V - 2.3 V} \over 1 K\Omega } = 1 \mbox{mA} *\mbox{ N number of LEDs}$}
+\footnotetext[4]{MCP1703  Datasheet}
 
 
 \section{Group Member Workload}
