@@ -290,6 +290,27 @@ Power consumption was a big issue for this project because it is  meant to be ru
 \footnotetext[3]{${{3.3 V - 2.3 V} \over 1 K\Omega } = 1 \mbox{mA} *\mbox{ N number of LEDs}$}
 \footnotetext[4]{MCP1703  Datasheet}
 
+\section{BOM}
+\begin{table}[!h]
+   \centering
+    \begin{tabular}{|r|r|}
+        \hline
+	Item & Price \\ \hline
+	Microcontroller: PIC18F4550 & Sampled \\ \hline
+	OpAmp: MPC6004 & Sampled \\ \hline
+	LDO Regulator: MPC1703 & Sampled \\ \hline
+	15 3mm  LEDs & \$0.02 * 15 = \$0.30 \\ \hline
+	BNC Connector & \$1.70 \\ \hline
+	16 Mhz Crystal & \$0.83 \\ \hline
+	Micro-USB Connector & \$1.14 \\ \hline
+	PCB & N/A \\ \hline
+	
+    \end{tabular}
+	\caption{Bill of Materials}
+	\label{bom} 
+\end{table}
+
+
 \section{Conclusion}
 We will be using a Microchip PIC18 microcontroller with an analog filter setup to
 construct this music tuner. Our coding structure uses the CCP module to interrupt at
