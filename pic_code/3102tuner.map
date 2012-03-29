@@ -1,5 +1,5 @@
 MPLINK 4.40, Linker
-Linker Map File - Created Thu Mar 01 10:34:29 2012
+Linker Map File - Created Fri Mar 23 20:38:30 2012
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
@@ -20,12 +20,12 @@ Linker Map File - Created Thu Mar 01 10:34:29 2012
       .idata_fxd0808u.o_i    romdata   0x000010    program   0x000000
                low_vector       code   0x000018    program   0x000006
                    .cinit    romdata   0x00001e    program   0x00000e
-            .code_tuner.o       code   0x00002c    program   0x0007da
-               _cinit_scn       code   0x000806    program   0x00009e
-         .code_fxd3232u.o       code   0x0008a4    program   0x000048
-                    .code       code   0x0008ec    program   0x000020
-             _startup_scn       code   0x00090c    program   0x00001c
-         .code_fxd0808u.o       code   0x000928    program   0x00001c
+            .code_tuner.o       code   0x00002c    program   0x000822
+               _cinit_scn       code   0x00084e    program   0x00009e
+         .code_fxd3232u.o       code   0x0008ec    program   0x000048
+                    .code       code   0x000934    program   0x000020
+             _startup_scn       code   0x000954    program   0x00001c
+         .code_fxd0808u.o       code   0x000970    program   0x00001c
    .config_300000_tuner.o    romdata   0x300000    program   0x000001
    .config_300001_tuner.o    romdata   0x300001    program   0x000001
    .config_300002_tuner.o    romdata   0x300002    program   0x000001
@@ -55,44 +55,28 @@ Linker Map File - Created Thu Mar 01 10:34:29 2012
                                Start         End      
                            ---------   ---------      
                             0x000000    0x00000f      
-                            0x000018    0x000943      
+                            0x000018    0x00098b      
                             0x300000    0x300003      
                             0x300005    0x300006      
-            2370 out of 33048 program addresses used, program memory utilization is 7%
+            2442 out of 33048 program addresses used, program memory utilization is 7%
 
 
 
                               Symbols - Sorted by Name
                      Name    Address   Location    Storage File                     
                 ---------  ---------  ---------  --------- ---------                
-                 FXD0808U   0x000928    program     extern C:\MCC18\v3_39\src\traditional\math\fxd0808u.c
-                 FXD3232U   0x0008a4    program     extern C:\MCC18\v3_39\src\traditional\math\fxd3232u.c
-      ___case_10_lbl00012   0x000320    program     static                          
-      ___case_11_lbl00013   0x000324    program     static                          
-      ___case_12_lbl00014   0x000328    program     static                          
-      ___case_13_lbl00015   0x00032c    program     static                          
-       ___case_1_lbl00003   0x0002fc    program     static                          
-       ___case_2_lbl00004   0x000300    program     static                          
-       ___case_3_lbl00005   0x000304    program     static                          
-       ___case_4_lbl00006   0x000308    program     static                          
-       ___case_5_lbl00007   0x00030c    program     static                          
-       ___case_6_lbl00008   0x000310    program     static                          
-       ___case_7_lbl00009   0x000314    program     static                          
-       ___case_8_lbl00010   0x000318    program     static                          
-       ___case_9_lbl00011   0x00031c    program     static                          
-      ___default_lbl00016   0x000330    program     static                          
-         ___else_lbl00018   0x00011c    program     static                          
-           ___if_lbl00017   0x000338    program     static                          
-           ___if_lbl00019   0x000338    program     static                          
+                 FXD0808U   0x000970    program     extern C:\MCC18\v3_39\src\traditional\math\fxd0808u.c
+                 FXD3232U   0x0008ec    program     extern C:\MCC18\v3_39\src\traditional\math\fxd3232u.c
+       ___return_lbl00000   0x000932    program     static                          
        ___return_lbl00000   0x000004    program     static                          
-       ___return_lbl00000   0x0008ea    program     static                          
-       ___return_lbl00000   0x000942    program     static                          
+       ___return_lbl00000   0x00098a    program     static                          
        ___return_lbl00000   0x00000c    program     static                          
-       ___return_lbl00001   0x000926    program     static                          
-       ___return_lbl00001   0x000340    program     static                          
-       ___return_lbl00002   0x0008a2    program     static                          
-       ___return_lbl00020   0x00001c    program     static                          
-   ___switchexit_lbl00002   0x000338    program     static                          
+       ___return_lbl00001   0x00096e    program     static                          
+       ___return_lbl00002   0x0008ea    program     static                          
+       ___return_lbl00022   0x00001c    program     static                          
+       ___return_lbl00058   0x00084c    program     static                          
+        ___while_lbl00059   0x000848    program     static                          
+        ___while_lbl00060   0x00084c    program     static                          
                __config_0   0x300000    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                __config_1   0x300001    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                __config_2   0x300002    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
@@ -100,44 +84,31 @@ Linker Map File - Created Thu Mar 01 10:34:29 2012
                __config_4   0x300005    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                __config_5   0x300006    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                    __init   0x000006    program     extern C:\MCC18\v3_39\src\traditional\stdclib\__init.c
-               __tmplbl_0   0x000280    program     static                          
-               __tmplbl_1   0x00028a    program     static                          
-              __tmplbl_10   0x0002e4    program     static                          
-              __tmplbl_11   0x0002ee    program     static                          
-              __tmplbl_12   0x0002f8    program     static                          
-               __tmplbl_2   0x000294    program     static                          
-               __tmplbl_3   0x00029e    program     static                          
-               __tmplbl_4   0x0002a8    program     static                          
-               __tmplbl_5   0x0002b2    program     static                          
-               __tmplbl_6   0x0002bc    program     static                          
-               __tmplbl_7   0x0002c6    program     static                          
-               __tmplbl_8   0x0002d0    program     static                          
-               __tmplbl_9   0x0002da    program     static                          
-            __zero_memory   0x0008ec    program     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                _do_cinit   0x000806    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
+            __zero_memory   0x000934    program     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                _do_cinit   0x00084e    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
                    _entry   0x000000    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
-                   _false   0x0008e6    program     static                          
-                 _startup   0x00090c    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
-                compare_l   0x000902    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                copy_loop   0x000878    program     static                          
-            copy_one_byte   0x00087e    program     static                          
-                     done   0x0008a2    program     static                          
-             done_copying   0x00088c    program     static                          
-                  endloop   0x00093e    program     static                          
+                   _false   0x00092e    program     static                          
+                 _startup   0x000954    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
+                compare_l   0x00094a    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                copy_loop   0x0008c0    program     static                          
+            copy_one_byte   0x0008c6    program     static                          
+                     done   0x0008ea    program     static                          
+             done_copying   0x0008d4    program     static                          
+                  endloop   0x000986    program     static                          
                    hi_isr   0x00002c    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
              hi_isr_entry   0x000008    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-         ledAverageChoice   0x000444    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                   lo_isr   0x00039a    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+         ledAverageChoice   0x000438    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+                   lo_isr   0x00038c    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
              lo_isr_entry   0x000018    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                     loop   0x000930    program     static                          
-                     loop   0x00091c    program     static                          
-                     loop   0x0008b2    program     static                          
-                   loop_h   0x0008fa    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                   loop_l   0x000904    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                     main   0x000800    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                    setup   0x0007d2    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                     test   0x000820    program     static                          
-               zero_block   0x0008fa    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                     loop   0x0008fa    program     static                          
+                     loop   0x000978    program     static                          
+                     loop   0x000964    program     static                          
+                   loop_h   0x000942    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                   loop_l   0x00094c    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                     main   0x000840    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+                    setup   0x000812    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+                     test   0x000868    program     static                          
+               zero_block   0x000942    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
                    ADCON0   0x000fc2       data     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
                ADCON0bits   0x000fc2       data     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
                    ADCON1   0x000fc1       data     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
@@ -433,67 +404,38 @@ Linker Map File - Created Thu Mar 01 10:34:29 2012
              hi_isr_entry   0x000008    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
        ___return_lbl00000   0x00000c    program     static                          
              lo_isr_entry   0x000018    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-       ___return_lbl00020   0x00001c    program     static                          
+       ___return_lbl00022   0x00001c    program     static                          
                    hi_isr   0x00002c    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-         ___else_lbl00018   0x00011c    program     static                          
-               __tmplbl_0   0x000280    program     static                          
-               __tmplbl_1   0x00028a    program     static                          
-               __tmplbl_2   0x000294    program     static                          
-               __tmplbl_3   0x00029e    program     static                          
-               __tmplbl_4   0x0002a8    program     static                          
-               __tmplbl_5   0x0002b2    program     static                          
-               __tmplbl_6   0x0002bc    program     static                          
-               __tmplbl_7   0x0002c6    program     static                          
-               __tmplbl_8   0x0002d0    program     static                          
-               __tmplbl_9   0x0002da    program     static                          
-              __tmplbl_10   0x0002e4    program     static                          
-              __tmplbl_11   0x0002ee    program     static                          
-              __tmplbl_12   0x0002f8    program     static                          
-       ___case_1_lbl00003   0x0002fc    program     static                          
-       ___case_2_lbl00004   0x000300    program     static                          
-       ___case_3_lbl00005   0x000304    program     static                          
-       ___case_4_lbl00006   0x000308    program     static                          
-       ___case_5_lbl00007   0x00030c    program     static                          
-       ___case_6_lbl00008   0x000310    program     static                          
-       ___case_7_lbl00009   0x000314    program     static                          
-       ___case_8_lbl00010   0x000318    program     static                          
-       ___case_9_lbl00011   0x00031c    program     static                          
-      ___case_10_lbl00012   0x000320    program     static                          
-      ___case_11_lbl00013   0x000324    program     static                          
-      ___case_12_lbl00014   0x000328    program     static                          
-      ___case_13_lbl00015   0x00032c    program     static                          
-      ___default_lbl00016   0x000330    program     static                          
-   ___switchexit_lbl00002   0x000338    program     static                          
-           ___if_lbl00017   0x000338    program     static                          
-           ___if_lbl00019   0x000338    program     static                          
-       ___return_lbl00001   0x000340    program     static                          
-                   lo_isr   0x00039a    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-         ledAverageChoice   0x000444    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                    setup   0x0007d2    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                     main   0x000800    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
-                _do_cinit   0x000806    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
-                     test   0x000820    program     static                          
-                copy_loop   0x000878    program     static                          
-            copy_one_byte   0x00087e    program     static                          
-             done_copying   0x00088c    program     static                          
-                     done   0x0008a2    program     static                          
-       ___return_lbl00002   0x0008a2    program     static                          
-                 FXD3232U   0x0008a4    program     extern C:\MCC18\v3_39\src\traditional\math\fxd3232u.c
-                     loop   0x0008b2    program     static                          
-                   _false   0x0008e6    program     static                          
-       ___return_lbl00000   0x0008ea    program     static                          
-            __zero_memory   0x0008ec    program     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                   loop_h   0x0008fa    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-               zero_block   0x0008fa    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                compare_l   0x000902    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                   loop_l   0x000904    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
-                 _startup   0x00090c    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
-                     loop   0x00091c    program     static                          
-       ___return_lbl00001   0x000926    program     static                          
-                 FXD0808U   0x000928    program     extern C:\MCC18\v3_39\src\traditional\math\fxd0808u.c
-                     loop   0x000930    program     static                          
-                  endloop   0x00093e    program     static                          
-       ___return_lbl00000   0x000942    program     static                          
+                   lo_isr   0x00038c    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+         ledAverageChoice   0x000438    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+                    setup   0x000812    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+                     main   0x000840    program     extern C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
+        ___while_lbl00059   0x000848    program     static                          
+        ___while_lbl00060   0x00084c    program     static                          
+       ___return_lbl00058   0x00084c    program     static                          
+                _do_cinit   0x00084e    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
+                     test   0x000868    program     static                          
+                copy_loop   0x0008c0    program     static                          
+            copy_one_byte   0x0008c6    program     static                          
+             done_copying   0x0008d4    program     static                          
+       ___return_lbl00002   0x0008ea    program     static                          
+                     done   0x0008ea    program     static                          
+                 FXD3232U   0x0008ec    program     extern C:\MCC18\v3_39\src\traditional\math\fxd3232u.c
+                     loop   0x0008fa    program     static                          
+                   _false   0x00092e    program     static                          
+       ___return_lbl00000   0x000932    program     static                          
+            __zero_memory   0x000934    program     extern C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                   loop_h   0x000942    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+               zero_block   0x000942    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                compare_l   0x00094a    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                   loop_l   0x00094c    program     static C:\MCC18\v3_39\src\traditional\proc\p18F4550.asm
+                 _startup   0x000954    program     extern C:\MCC18\v3_39\src\traditional\startup\c018i.c
+                     loop   0x000964    program     static                          
+       ___return_lbl00001   0x00096e    program     static                          
+                 FXD0808U   0x000970    program     extern C:\MCC18\v3_39\src\traditional\math\fxd0808u.c
+                     loop   0x000978    program     static                          
+                  endloop   0x000986    program     static                          
+       ___return_lbl00000   0x00098a    program     static                          
                __config_0   0x300000    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                __config_1   0x300001    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c
                __config_2   0x300002    program     static C:\Users\Ilyich\Desktop\tuner\pic_code\tuner.c

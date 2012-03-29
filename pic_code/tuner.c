@@ -1,6 +1,8 @@
-include <p18f4550.h> 
+#include <p18f4550.h> 
 
 
+//3102 probable configurations
+/*
 #pragma config FOSC=HSPLL_HS //Using XMHz crystal(above 4 MHz, assuming 8 MHz)
 #pragma config PLLDIV=2 //Divide 8 by 2 provide 4 MHz to the 96 MHz PLL
 #pragma config CPUDIV=OSC1_PLL2 //Divide 96 MHz by 2 to get 48 MHz for system clock
@@ -9,7 +11,11 @@ include <p18f4550.h>
 #pragma config WDT=OFF, PWRT=ON, BOR=OFF//Disable Watchdog timer and Brown Out Rest, Enable Power up timer
 #pragma config LVP=OFF, MCLRE=ON, PBADEN=OFF, STVREN=ON
 #pragma config FCMEN = ON
-
+*/
+//2361 configurations
+#pragma config PLLDIV=2, CPUDIV=OSC1_PLL2, USBDIV=2, IESO=ON, WDT=OFF, BOR=OFF, PWRT=ON, LVP=OFF
+#pragma config FOSC=HSPLL_HS, FCMEN=OFF, VREGEN=OFF, MCLRE=ON, LPT1OSC=ON, PBADEN=OFF
+#pragma config STVREN=ON
 void hi_isr(void);
 void lo_isr(void);
 
@@ -50,8 +56,10 @@ void hi_isr_entry(void)
 void hi_isr(void)
 { 
 	if(CCP1IF)
-		TMR1REG = 0x00;//reset the tmr1 register
+	{
+		//TMR1REG = 0x00;//reset the tmr1 register
 		if(init_counter < size)//first size iterations will not yield an output
+		//if(count < size)//average value will update only when size = count
 		{
 				int spot = count++;
 				CCP1IF = 0;
@@ -61,14 +69,6 @@ void hi_isr(void)
 				sum = sum + values[spot];
 		
 		}
-		//This will ensure that only 1 time in every 5 will output, not necessarily bad, but is it what we want?
-		/*if(count < 5)//on the occurance of size iterations 
-		{
-			CCP1IF = 0;
-			count++;
-			sum += CCPR1;
-		}
-		*/
 		else		
 		{
 			int place = count++;
@@ -77,9 +77,9 @@ void hi_isr(void)
 			sum = sum - values[place];//remove the previous value of the running sum
 			values[place] = CCPR1;
 			sum = sum + values[place];
-			//TMR1 overflows are handled in the low priority interrupt
 			avg = sum/size;
-			PORTD = 0x00;//reset LED's to off
+			//reset LED's to off
+			PORTD = 0x00;
 			PORTA &= 0xC0;
 			PORTEbits.RE0 = 0;
 			switch(ledAverageChoice(avg))
@@ -129,11 +129,6 @@ void hi_isr(void)
 			case 14:
 				PORTDbits.RD7 = 1; //More than 30 Cents
 				return;
-
-
-
-
-
 			default:
 				PORTD = 0xC0;//set LED's to indicate an error
 				//PORTA |= 0x3F;
@@ -141,11 +136,10 @@ void hi_isr(void)
 				
 				return;
 			}											
+			//reset average (for fixed sampling)
+			//avg = 0;
 		}
-		OSCCONbits.IDLEN = 1; //PRI_IDLE modes
-		OSCCONbits.SCS1 = 0;
-		OSCCONbits.SCS0 = 0;
-		
+	}
 }
 
 
@@ -161,10 +155,10 @@ void lo_isr_entry(void)
 #pragma code
 #pragma interruptlow lo_isr
 void lo_isr(void){
-	//probably want to add an if check to ensure that the timer1 interrupt occurs
-	TMR1REG = 0x00;//reset the tmr1 register
-	//This section of code handles when TMR1 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
 	int i;
+	//probably want to add an if check to ensure that the timer1 interrupt occurs
+	//TMR1REG = 0x00;//reset the tmr1 register
+	//This section of code handles when TMR1 overflows. We made need to put this in the High_ISR or disable interuppts to prevent interruption
 	INTCONbits.GIEH = 0;
 	count = 0;
 	PORTA = 0x00;
@@ -270,6 +264,9 @@ void setup(void){
 
 void main(void){
 	setup();
+	OSCCONbits.IDLEN = 1; //PRI_IDLE modes
+	OSCCONbits.SCS1 = 0;
+	OSCCONbits.SCS0 = 0;
 	while(1)
 	{
 		_asm SLEEP _endasm
